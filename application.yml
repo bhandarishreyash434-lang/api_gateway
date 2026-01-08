@@ -1,0 +1,32 @@
+server:
+  port: 8087
+
+spring:
+  application:
+    name: API-GATEWAY
+
+  cloud:
+    gateway:
+      routes:
+
+        - id: USER-MICRO
+          uri: lb://USER-MICRO
+          predicates:
+            - Path=/users/**
+
+        - id: HOTEL-MICRO
+          uri: lb://HOTEL-MICRO
+          predicates:
+            - Path=/hotels/**
+
+        - id: RATING-SERVICE-MICRO
+          uri: lb://RATING-SERVICE-MICRO
+          predicates:
+            - Path=/rating/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
